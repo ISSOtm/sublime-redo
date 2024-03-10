@@ -1,0 +1,22 @@
+{
+	"cmd": ["redo"],
+	"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+	"working_dir": "${folder:${project_path:${file_path}}}",
+	"selector": "source.redo",
+	"syntax": "Packages/Redo/Redo Output.sublime-syntax",
+	"keyfiles": ["all.do", "clean.do"],
+
+	"variants":
+	[
+		{
+			"name": "Clean",
+			"cmd": ["redo", "clean"]
+		},
+		{
+			"name": "Do",
+			"cmd": ["./do"],
+			"keyfiles": ["./do"]
+		}
+		// TODO: support for `./do`?
+	]
+}

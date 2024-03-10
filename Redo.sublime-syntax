@@ -1,0 +1,17 @@
+%YAML 1.2
+# http://www.sublimetext.com/docs/3/syntax.html
+---
+name: Redo
+scope: source.redo
+
+file_extensions:
+  - do
+
+contexts:
+  main:
+    # Redo just uses shell scripts. Notably, this means that tools (e.g. linters...) should process
+    # these files *as* shell scripts.
+    - match: ''
+      push:
+        - meta_scope: source.shell.bash
+        - include: Packages/ShellScript/Bash.sublime-syntax

@@ -1,0 +1,37 @@
+%YAML 1.2
+---
+name: Redo Output
+hidden: true
+scope: source.build_output
+
+variables:
+  pfx: ^(redo|do)(:)?\s+
+
+contexts:
+  main:
+    # Emitted by `./do`.
+    - match: '{{pfx}}(.+)(:) (got exit code \d+)$'
+      captures:
+        1: comment
+        2: punctuation.separator.build_output
+        3: entity.name.filename
+        4: punctuation.separator.build_output
+        5: message.error
+    - match: |
+        (?x) # Ignore whitespace in this regex.
+        # Note that `./do` outputs `do`, not `redo`.
+        {{pfx}} # Line prefix.
+        (.+?) # File name.
+        (?:\s+\((?: # Some status-ish messages get appended, between parens.
+          (exit\s\d+) # Mark that redoing failed.
+          |[^()]+ # Other misc. indication (e.g. "resumed").
+        )\))?
+        $
+      captures:
+        1: comment
+        2: punctuation.separator.build_output
+        3: entity.name.filename
+        4: message.error
+    # Trailer lines emitted by Sublime Text itself.
+    - match: '^\[.+\]$'
+      scope: comment
